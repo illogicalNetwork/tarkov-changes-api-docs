@@ -90,7 +90,7 @@ jobs:
 
   deploy-site-docker:
     runs-on: self-hosted
-    needs: [build-api]
+    needs: [build-site-docker]
 
     permissions:
       contents: read
