@@ -56,6 +56,11 @@ jobs:
           name: build-artifact
           path: build
 
+      - name: ls
+        run: |
+          ls
+          pwd
+
       - name: 'Set up QEMU'
         uses: docker/setup-qemu-action@v2
 
