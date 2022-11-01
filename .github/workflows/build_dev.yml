@@ -33,6 +33,11 @@ jobs:
           bundle install --jobs 4 --retry 3
       - run: bundle exec middleman build
 
+      - uses: actions/upload-artifact@v3
+        with:
+          name: build-artifact
+          path: build/
+
   build-site-docker:
     runs-on: ubuntu-latest
     needs: [build-site]
@@ -44,6 +49,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
+      - name: Grab Build Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: build-artifact
 
       - name: 'Set up QEMU'
         uses: docker/setup-qemu-action@v2
