@@ -72,14 +72,17 @@ jobs:
         if: github.event_name == 'workflow_dispatch'
         uses: docker/build-push-action@v3
         with:
+          context: .
           file: './docker/Dockerfile'
           push: true
           tags: |
             ghcr.io/illogicalnetwork/tarkov-changes-api-docs:latest
+
       - name: 'Build and push release'
         if: github.event_name == 'release'
         uses: docker/build-push-action@v3
         with:
+          context: .
           file: './docker/Dockerfile'
           push: true
           tags: |

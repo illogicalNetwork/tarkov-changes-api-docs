@@ -72,6 +72,7 @@ jobs:
         if: github.event_name == 'workflow_dispatch'
         uses: docker/build-push-action@v3
         with:
+          context: .
           file: './docker/Dockerfile'
           push: true
           tags: |
@@ -81,6 +82,7 @@ jobs:
         if: github.event_name == 'release'
         uses: docker/build-push-action@v3
         with:
+          context: .
           file: './docker/Dockerfile'
           push: true
           tags: |
