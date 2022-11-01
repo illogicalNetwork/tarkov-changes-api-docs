@@ -45,7 +45,7 @@ RUN chown -R nobody.nobody /var/www/html /run /var/lib/nginx /var/log/nginx
 USER nobody
 
 # Add application
-COPY --chown=nobody build/ /var/lib/nginx/html/
+COPY --chown=nobody /home/runner/work/tarkov-changes-api-docs/tarkov-changes-api-docs/build/* /var/lib/nginx/html/
 
 # Expose the port nginx is reachable on
 EXPOSE 8000
