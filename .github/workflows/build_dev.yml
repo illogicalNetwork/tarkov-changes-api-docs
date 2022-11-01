@@ -36,7 +36,7 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: build-artifact
-          path: build/
+          path: build
 
   build-site-docker:
     runs-on: ubuntu-latest
@@ -54,6 +54,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: build-artifact
+          path: build
 
       - name: 'Set up QEMU'
         uses: docker/setup-qemu-action@v2
