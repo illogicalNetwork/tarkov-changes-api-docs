@@ -1,0 +1,53 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version bump'
+        required: true
+        type: choice
+        options:
+        - major
+        - minor
+        - patch
+        - premajor
+        - preminor
+        - prepatch
+        - prerelease
+
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+
+    outputs:
+      version: ${{ steps.bump.outputs.version }}
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.TOKEN }}
+
+    - name: Commit, tag, and push
+      run: |
+        git config --global user.email "admin@inspectelement.tech"
+        git config --global user.name "Inspect Element"
+        git commit -m "build: release ${{ steps.bump.outputs.version }}"
+        git tag -a "${{ steps.bump.outputs.version }}" -m "Release ${{ steps.bump.outputs.version }}"
+        git push origin main --tags
+  release:
+    needs: bump
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        ref: main
+
+    - uses: ncipollo/release-action@v1
+      with:
+        name: Tarkov-Changes API Docs ${{ needs.bump.outputs.version }}
+        generateReleaseNotes: true
+        prerelease: ${{ contains(needs.bump.outputs.version, 'a') }}
+        tag: ${{ needs.bump.outputs.version }}
+        token: ${{ secrets.TOKEN }}
