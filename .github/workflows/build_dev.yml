@@ -50,17 +50,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Grab Build Artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: build-artifact
-          path: build
-
-      - name: ls
-        run: |
-          ls build/
-          pwd
-
       - name: 'Set up QEMU'
         uses: docker/setup-qemu-action@v2
 
@@ -83,6 +72,12 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.TOKEN }}
+
+      - name: Grab Build Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: build-artifact
+          path: build
 
       - name: 'Build and push workflow'
         if: github.event_name == 'workflow_dispatch'
