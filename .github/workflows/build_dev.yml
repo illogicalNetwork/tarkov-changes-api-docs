@@ -58,7 +58,7 @@ jobs:
 
       - name: ls
         run: |
-          ls
+          ls build/
           pwd
 
       - name: 'Set up QEMU'
