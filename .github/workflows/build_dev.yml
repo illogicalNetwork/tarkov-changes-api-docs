@@ -81,6 +81,7 @@ jobs:
         run: docker pull ghcr.io/illogicalnetwork/tarkov-changes-api-docs:staging
 
       - name: Rename Running Container
+        continue-on-error: true
         run: docker rename staging-api-docs staging-api-docs-blue
 
       - name: Start API Container
