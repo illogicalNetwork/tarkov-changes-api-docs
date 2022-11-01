@@ -75,7 +75,6 @@ jobs:
           file: './docker/Dockerfile'
           push: true
           tags: |
-            ghcr.io/illogicalnetwork/tarkov-changes-api-docs:${{ github.event.release.tag_name }}
             ghcr.io/illogicalnetwork/tarkov-changes-api-docs:staging
 
       - name: 'Build and push release'
@@ -85,7 +84,6 @@ jobs:
           file: './docker/Dockerfile'
           push: true
           tags: |
-            ghcr.io/illogicalnetwork/tarkov-changes-api-docs:${{ github.event.release.tag_name }}
             ghcr.io/illogicalnetwork/tarkov-changes-api-docs:staging
 
   deploy-site-docker:
