@@ -68,6 +68,12 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.TOKEN }}
 
+      - name: Grab Build Artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: build-artifact
+          path: build
+
       - name: 'Build and push workflow'
         if: github.event_name == 'workflow_dispatch'
         uses: docker/build-push-action@v3

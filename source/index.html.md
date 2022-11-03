@@ -3,13 +3,11 @@ title: API Reference
 
 language_tabs: # must be one of https://git.io/vQNgJ
   - shell
-  - ruby
   - python
   - javascript
 
 toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
-  - <a href='https://github.com/slatedocs/slate'>Documentation Powered by Slate</a>
+  - <a href=https://tarkov-changes.com/developer'>Sign Up for a Developer Key</a>
 
 includes:
   - errors
@@ -25,21 +23,15 @@ meta:
 
 # Introduction
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+Welcome to the Tarkov-Changes API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
 
-We have language bindings in Shell, Ruby, Python, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+We have language bindings in Shell, Python, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
 
-This example API documentation page was created with [Slate](https://github.com/slatedocs/slate). Feel free to edit it and use it as a base for your own API's documentation.
 
 # Authentication
 
 > To authorize, use this code:
 
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
 
 ```python
 import kittn
@@ -71,7 +63,7 @@ Kittn expects for the API key to be included in all API requests to the server i
 You must replace <code>meowmeowmeow</code> with your personal API key.
 </aside>
 
-# Kittens
+# General
 
 ## Get All Kittens
 
@@ -242,4 +234,62 @@ This endpoint deletes a specific kitten.
 Parameter | Description
 --------- | -----------
 ID | The ID of the kitten to delete
+
+# Ammo
+
+# Ammo
+
+# Armor
+
+# Backpacks
+
+# Banned
+
+# Barters
+
+# Boss
+
+# Buffs
+
+# Credits
+
+# Clothing
+
+# Containers
+
+# Firearms
+
+# Food
+
+# Grenades
+
+# Headphones
+
+# Helmets
+
+# Items
+
+# Limits
+
+# Karma
+
+# Knives
+
+# Keys
+
+# Maps
+
+# Magazines
+
+# Medicals
+
+# Mods
+
+# Money
+
+# Rigs
+
+# Search
+
+# Trader Resets
 
