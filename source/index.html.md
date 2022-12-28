@@ -1,5 +1,5 @@
 ---
-title: API Reference
+title: Tarkov Changes API Reference
 
 language_tabs: # must be one of https://git.io/vQNgJ
   - shell
@@ -18,226 +18,103 @@ code_clipboard: true
 
 meta:
   - name: description
-    content: Documentation for the Kittn API
+    content: Here lies the documentation for the Tarkov Changes API. A collection of resources about Escape from Tarkov.
 ---
 
 # Introduction
 
-Welcome to the Tarkov-Changes API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+Welcome to the Tarkov Changes API.
 
 We have language bindings in Shell, Python, and JavaScript! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
 
 
 # Authentication
 
-> To authorize, use this code:
+To use the API (like the website does) simply make a call to `/v1/auth` and it will return a JSON object with a key of "CSRF-Token" which contains your temporary API key.
+
+To obtain a more permanent API key which gives you access to a higher rate limit and other features please see https://tarkov-changes.com/developer.
 
 
 ```python
-import kittn
 
-api = kittn.authorize('meowmeowmeow')
 ```
 
 ```shell
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here" \
-  -H "Authorization: meowmeowmeow"
+
 ```
 
 ```javascript
-const kittn = require('kittn');
 
-let api = kittn.authorize('meowmeowmeow');
 ```
 
-> Make sure to replace `meowmeowmeow` with your API key.
+# Ammo
 
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
-
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
-
-`Authorization: meowmeowmeow`
-
-<aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
-</aside>
-
-# General
-
-## Get All Kittens
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
+## Get Current Ammo 
 
 ```python
-import kittn
+import requests
 
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
+headers = { 
+  "CSRF-Token": $token,
+}
+
+r = requests.get("https://api.tarkov-changes.com/v1/ammo", headers=headers)
 ```
 
 ```shell
-curl "http://example.com/api/kittens" \
-  -H "Authorization: meowmeowmeow"
+
 ```
 
 ```javascript
-const kittn = require('kittn');
 
-let api = kittn.authorize('meowmeowmeow');
-let kittens = api.kittens.get();
-```
-
-> The above command returns JSON structured like this:
-
-```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-  }
-]
-```
-
-This endpoint retrieves all kittens.
-
-### HTTP Request
-
-`GET http://example.com/api/kittens`
-
-### Query Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
-
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-
-## Get a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2" \
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.get(2);
 ```
 
 > The above command returns JSON structured like this:
 
 ```json
 {
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
+    "msg": "",
+    "results": [
+        ...
+        {
+            "Accuracy": "0",
+            "Armor Damage": "26",
+            "Ballistic Coefficient": "1",
+            "Buckshot Count": "8",
+            "Caliber": "Caliber23x75",
+            "Cell Height": "1",
+            "Cell Width": "1",
+            "Description": null,
+            "Discard Limit": "-1",
+            "Durability Burn": "1",
+            "Failure to Feed": "0",
+            "Flesh Damage": "32",
+            "Frag Chance": "0",
+            "Heat Factor": "1",
+            "Heavy Bleeding Delta": "0",
+            "Item ID": "5f647fd3f6e4ab66c82faed6",
+            "Item Weight": "0.08",
+            "Light Bleeding Delta": "0",
+            "Malfunction Chance": null,
+            "Max Stack Size": "15",
+            "Misfire Chance": "0.01",
+            "Name": null,
+            "Penetration Chance": "0.02",
+            "Penetration Power": "3",
+            "Projectile Speed": "270",
+            "Recoil": "0",
+            "Stamina Burn per Dmg": "0.24"
+        }
+    ],
+    "status": "success"
 }
 ```
 
-This endpoint retrieves a specific kitten.
-
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+This endpoint retrieves current ammo.
 
 ### HTTP Request
 
-`GET http://example.com/kittens/<ID>`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
-
-## Delete a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.delete(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2" \
-  -X DELETE \
-  -H "Authorization: meowmeowmeow"
-```
-
-```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.delete(2);
-```
-
-> The above command returns JSON structured like this:
-
-```json
-{
-  "id": 2,
-  "deleted" : ":("
-}
-```
-
-This endpoint deletes a specific kitten.
-
-### HTTP Request
-
-`DELETE http://example.com/kittens/<ID>`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to delete
-
-# Ammo
-
-# Ammo
+`GET https://api.tarkov-changes.com/v1/ammo`
 
 # Armor
 
@@ -292,4 +169,57 @@ ID | The ID of the kitten to delete
 # Search
 
 # Trader Resets
+
+# Weather
+
+## Get Current Weather Conditions
+
+```python
+import requests
+
+headers = { 
+  "CSRF-Token": $token,
+}
+
+r = requests.get("https://api.tarkov-changes.com/v1/weather", headers=headers)
+```
+
+```shell
+
+```
+
+```javascript
+
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+    "msg": "",
+    "results": [
+        {
+            "cloud": -0.995,
+            "date": "2022-12-28",
+            "fog": 0.002,
+            "pressure": 760,
+            "rain": 1,
+            "rain_intensity": 0.0,
+            "temp": 24,
+            "time": "2022-12-28 04:15:03",
+            "timestamp": 1672190103,
+            "wind_direction": 2,
+            "wind_gustiness": 0.017,
+            "wind_speed": 1
+        }
+    ],
+    "status": "success"
+}
+```
+
+This endpoint retrieves current weather conditions in Tarkov.
+
+### HTTP Request
+
+`GET https://api.tarkov-changes.com/v1/weather`
 
