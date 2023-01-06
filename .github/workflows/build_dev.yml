@@ -25,8 +25,7 @@ jobs:
           pip install poetry
           cd scripts
           poetry install
-          cd ..
-          poetry run python scripts/gen_docs.py > source/index.html.md
+          poetry run python gen_docs.py > ../source/index.html.md
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
