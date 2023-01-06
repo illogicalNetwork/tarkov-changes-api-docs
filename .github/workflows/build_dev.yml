@@ -14,29 +14,43 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: ${{ env.ruby-version }}
 
-      - uses: actions/cache@v2
-        with:
-          path: vendor/bundle
-          key: gems-${{ runner.os }}-${{ env.ruby-version }}-${{ hashFiles('**/Gemfile.lock') }}
-          restore-keys: |
-            gems-${{ runner.os }}-${{ env.ruby-version }}-
-            gems-${{ runner.os }}-
-      - run: bundle config set deployment 'true'
-      - name: bundle install
-        run: |
-          bundle config path vendor/bundle
-          bundle install --jobs 4 --retry 3
-      - run: bundle exec middleman build
+     - name: Set up Python
+      uses: actions/setup-python@v3
+      with:
+        python-version: '3.11'
+    - name: Install poetry and install deps
+      run: |
+        python -m pip install -U pip
+        pip install poetry
+        cd scripts
+        poetry install
+    - name: Run markdown generation
+      run: | 
+        python gen_markdown.py > ../source/index.html.md
+        
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ env.ruby-version }}
+    - uses: actions/cache@v2
+      with:
+        path: vendor/bundle
+        key: gems-${{ runner.os }}-${{ env.ruby-version }}-${{ hashFiles('**/Gemfile.lock') }}
+        restore-keys: |
+          gems-${{ runner.os }}-${{ env.ruby-version }}-
+          gems-${{ runner.os }}-
+    - run: bundle config set deployment 'true'
+    - name: bundle install
+      run: |
+        bundle config path vendor/bundle
+        bundle install --jobs 4 --retry 3
+    - run: bundle exec middleman build
 
-      - uses: actions/upload-artifact@v3
-        with:
-          name: build-artifact
-          path: build
+    - uses: actions/upload-artifact@v3
+      with:
+        name: build-artifact
+        path: build
 
   build-site-docker:
     runs-on: ubuntu-latest
