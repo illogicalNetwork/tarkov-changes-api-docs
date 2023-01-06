@@ -1,4 +1,4 @@
-name: Build and Deploy Prod
+name: Build and Deploy latest
 
 on:
   release:
@@ -14,11 +14,23 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.11'
+      - name: Install poetry and install deps
+        run: |
+          python -m pip install -U pip
+          pip install poetry
+          cd scripts
+          poetry install
+          poetry run python gen_docs.py > ../source/index.html.md
+
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ env.ruby-version }}
-
       - uses: actions/cache@v2
         with:
           path: vendor/bundle
@@ -33,9 +45,14 @@ jobs:
           bundle install --jobs 4 --retry 3
       - run: bundle exec middleman build
 
+      - uses: actions/upload-artifact@v3
+        with:
+          name: build-artifact
+          path: build
+
   build-site-docker:
     runs-on: ubuntu-latest
-    needs: [ build-site ]
+    needs: [build-site]
 
     permissions:
       contents: read
@@ -117,11 +134,12 @@ jobs:
         run: docker pull ghcr.io/illogicalnetwork/tarkov-changes-api-docs:latest
 
       - name: Rename Running Container
+        continue-on-error: true
         run: docker rename api-docs api-docs-blue
 
       - name: Start API Container
         continue-on-error: true
-        run: docker run --network=tarkov_prod --restart=unless-stopped --env-file=/data/api/api-prod.env --label "traefik.enable=true" --label "traefik.http.routers.apidocs.service=apidocs" --label "traefik.http.services.apidocs.loadbalancer.server.port=8000" --label "traefik.http.routers.apidocs.rule=Host(\`docs.tarkov-changes.com\`)" --name="api-docs" -itd ghcr.io/illogicalnetwork/tarkov-changes-api-docs:latest
+        run: docker run --network=tarkov_prod --restart=unless-stopped --env-file=/data/api/api-prod.env --label "traefik.enable=true" --label "traefik.http.routers.latestapidocs.service=latestapidocs" --label "traefik.http.services.latestapidocs.loadbalancer.server.port=8000" --label "traefik.http.routers.latestapidocs.rule=Host(\`docs.tarkov-changes.com\`)" --name="latest-api-docs" -itd ghcr.io/illogicalnetwork/tarkov-changes-api-docs:latest
 
       - name: Stop Blue API Container
         continue-on-error: true
