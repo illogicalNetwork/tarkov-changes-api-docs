@@ -30,7 +30,8 @@ jobs:
           ls /
           pwd
           ls
-          python gen_markdown.py > source/index.html.md
+          ls scripts
+          python scripts/gen_markdown.py > source/index.html.md
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
