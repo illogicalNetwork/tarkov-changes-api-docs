@@ -27,7 +27,10 @@ jobs:
           poetry install
       - name: Run markdown generation
         run: | 
-          python scripts/gen_markdown.py > source/index.html.md
+          ls /
+          pwd
+          ls
+          python gen_markdown.py > source/index.html.md
 
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
