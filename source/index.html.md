@@ -7,7 +7,7 @@ language_tabs:
   - javascript
 
 toc_footers:
-  - <a href=https://tarkov-changes.com/developer'>Sign Up for a Developer Key</a>
+  - <a href=https://tarkov-changes.com/developer>Sign Up for a Developer Key</a>
 
 includes:
   - errors
